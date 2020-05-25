@@ -1,0 +1,493 @@
+{
+  "intents": [
+    {
+      "intent": "greetings",
+      "examples": [
+        {
+          "text": "hi"
+        },
+        {
+          "text": "hi there"
+        },
+        {
+          "text": "hello there"
+        },
+        {
+          "text": "hey!!watsup"
+        },
+        {
+          "text": "hello"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "question",
+      "examples": [
+        {
+          "text": "I required details on digital walking sticks"
+        },
+        {
+          "text": "need details on digital walking sticks"
+        },
+        {
+          "text": "can i ask you a question regarding digital walking stick"
+        },
+        {
+          "text": "I want details for digital walking sticks"
+        },
+        {
+          "text": "can i get details on digital walking sticks"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "infrared",
+      "examples": [
+        {
+          "text": "what is the length of infra red sensor"
+        },
+        {
+          "text": "can i get the length of infra red sensor"
+        },
+        {
+          "text": "need the length of infra red sensor"
+        },
+        {
+          "text": "required length of infra red sensor"
+        },
+        {
+          "text": "length of infra red sensor"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "goodbye",
+      "examples": [
+        {
+          "text": "see you again"
+        },
+        {
+          "text": "thank you for information"
+        },
+        {
+          "text": "thanks alot"
+        },
+        {
+          "text": "thanks"
+        },
+        {
+          "text": "take care"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "waterlevel",
+      "examples": [
+        {
+          "text": "want the water level to detect"
+        },
+        {
+          "text": "i want to know the water level to detect"
+        },
+        {
+          "text": "the water level to detect"
+        },
+        {
+          "text": "can i get the water level to detect"
+        },
+        {
+          "text": "need the water level to detect"
+        },
+        {
+          "text": "what would be the water level to detect"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "mems",
+      "examples": [
+        {
+          "text": "size of mems sensor"
+        },
+        {
+          "text": "what is the size of mems sensor"
+        },
+        {
+          "text": "I want size of mems sensor"
+        },
+        {
+          "text": "can i get size of mems sensor"
+        },
+        {
+          "text": "required size of mems sensor"
+        },
+        {
+          "text": "need size of mems sensor"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "micro",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "micro value",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "metres",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "the metres value",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "feet",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "feet value",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1590396549035",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1590396549055",
+      "previous_sibling": "handler_10_1590396549055"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1590396549035",
+      "context": {
+        "micro": "@micro"
+      },
+      "conditions": "@micro",
+      "event_name": "input",
+      "dialog_node": "handler_10_1590396549055"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_9_1590396611622",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1590396611640",
+      "previous_sibling": "handler_5_1590396611640"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_9_1590396611622",
+      "context": {
+        "metres": "@metres"
+      },
+      "conditions": "@metres",
+      "event_name": "input",
+      "dialog_node": "handler_5_1590396611640"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1590396572608",
+      "variable": "$metres",
+      "dialog_node": "slot_9_1590396611622",
+      "previous_sibling": "handler_2_1590396610936"
+    },
+    {
+      "type": "event_handler",
+      "parent": "node_7_1590396572608",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1590396610936"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1590396678521",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1590396678540",
+      "previous_sibling": "handler_5_1590396678540"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1590396678521",
+      "context": {
+        "feet": "@feet"
+      },
+      "conditions": "@feet",
+      "event_name": "input",
+      "dialog_node": "handler_5_1590396678540"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1590396482732",
+      "variable": "$micro",
+      "dialog_node": "slot_10_1590396549035",
+      "previous_sibling": "handler_1_1590396548388"
+    },
+    {
+      "type": "event_handler",
+      "parent": "node_7_1590396482732",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1590396548388"
+    },
+    {
+      "type": "slot",
+      "parent": "node_10_1590396634030",
+      "variable": "$feet",
+      "dialog_node": "slot_10_1590396678521",
+      "previous_sibling": "handler_3_1590396677916"
+    },
+    {
+      "type": "event_handler",
+      "parent": "node_10_1590396634030",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1590396677916"
+    },
+    {
+      "type": "frame",
+      "title": "Handle infrared",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Infrared (IR) light is electromagnetic radiation with a wavelength longer than that of visible light, starting from the nominal edge of visible red light at 0.7 micro meters, and extending conventionally to 300 micro meters."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#infrared",
+      "dialog_node": "node_7_1590396482732",
+      "previous_sibling": "node_7_1590396572608"
+    },
+    {
+      "type": "frame",
+      "title": "handle water",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The total maximum wire run between water level sensor and the irrigation controller is 3,000 feet."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#waterlevel",
+      "dialog_node": "node_10_1590396634030",
+      "previous_sibling": "node_5_1590396749860"
+    },
+    {
+      "type": "standard",
+      "title": "Handle goodbye",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "you are welcome"
+              },
+              {
+                "text": "my pleasure"
+              },
+              {
+                "text": "welcome"
+              },
+              {
+                "text": "you too take care"
+              },
+              {
+                "text": "see you again"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#goodbye",
+      "dialog_node": "node_5_1590396402076",
+      "previous_sibling": "node_7_1590396482732"
+    },
+    {
+      "type": "frame",
+      "title": "Handle mems",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "MEMS are made up of components between 1 to 100 micrometers in size (i.e. 0.001 to 0.1 mm) and MEMS devices generally range in size from 20 micrometers (20 millionths of a meter) to a millimeter."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#mems",
+      "dialog_node": "node_7_1590396572608",
+      "previous_sibling": "node_10_1590396634030"
+    },
+    {
+      "type": "standard",
+      "title": "handle question",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "yes!! sure you can ask a question"
+              },
+              {
+                "text": "tell me what is your question. which details you need."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#question",
+      "dialog_node": "node_5_1590396749860",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "handle greetings",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "hello there"
+              },
+              {
+                "text": "hi there"
+              },
+              {
+                "text": "hey!! cool"
+              },
+              {
+                "text": "hello"
+              },
+              {
+                "text": "hi"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#greetings",
+      "dialog_node": "node_3_1590396344405",
+      "previous_sibling": "node_5_1590396402076"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_3_1590396344405",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. How can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "My first skill",
+  "language": "en",
+  "description": ""
+}
