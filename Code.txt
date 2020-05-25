@@ -1,0 +1,284 @@
+/*
+  WiFiEsp example: WebClient
+
+  This sketch connects to google website using an ESP8266 module to
+  perform a simple web search.
+
+  For more details see: http://yaab-arduino.blogspot.com/p/wifiesp-example-client.html
+*/
+//http://projectsiot.xyz/IoTProjects/MovableRailway/pfupload.php?a=U
+// http://projectsiot.xyz/IoTProjects/MovableRailway/pfstatus.php
+#include "WiFiEsp.h"
+#include<String.h>
+#include <LiquidCrystal.h>
+
+// Emulate Serial1 on pins 6/7 if not present
+#ifndef HAVE_HWSERIAL1
+#include "SoftwareSerial.h"
+SoftwareSerial Serial1(12, 13); // RX, TX
+#endif
+
+
+char ssid[] = "project123";            // your network SSID (name)
+char pass[] = "project123456";        // your network password
+int status = WL_IDLE_STATUS;     // the Wifi radio's status
+
+char server[] = "projectsiot.xyz";
+char server1[] = "sms.scubedigi.com";
+
+String r = "GET /IoTProjects/MovableRailway/pfupload.php?a=";
+String Z = " HTTP/1.1";
+String msg = "GET /api.php?username=Mydreamacd&password=Mydre@m123&to=";
+// "GET /api.php?username=Mydreamacd&password=Mydre@m123&to=9652490222&from=MYDREM&message=WELCOME%20MESSAGE HTTP/1.1"
+String iot = "\0";
+String bulk = "\0";
+String rs = "\0";
+String B = "&b=";
+String C = "&c=";
+String D = "&d=";
+#define IR A0
+#define SOIL A1
+#define MEMS A2
+#define vib 2
+#define echo A3
+#define trigg A4
+#define buzzer 3
+#define v0 4
+#define v1 5
+#define v2 6
+#define v3 7
+String P,Q,R,S;
+unsigned int duration=0,mt1;
+float distance;
+int i,s,m,v;
+unsigned int obstacle = 0;
+unsigned int fire = 0;
+
+void beep()
+{
+  Serial.println("buzer onn");
+  //delay(300);
+  digitalWrite(buzzer,HIGH);digitalWrite(vib,HIGH);
+  delay(300);
+  digitalWrite(buzzer,LOW);digitalWrite(vib,LOW); 
+   delay(300); 
+  digitalWrite(buzzer,HIGH);digitalWrite(vib,HIGH);
+  delay(300);
+  digitalWrite(buzzer,LOW);digitalWrite(vib,LOW);
+   delay(300); 
+  digitalWrite(buzzer,HIGH);digitalWrite(vib,HIGH);
+  delay(300);
+  digitalWrite(buzzer,LOW);digitalWrite(vib,LOW); 
+   delay(300);
+}
+
+// 9652490222&from=MYDREM&message=person1%20detected"
+
+// Initialize the Ethernet client object
+WiFiEspClient client;
+
+void setup()
+{
+  // initialize serial for debugging
+  Serial.begin(9600);
+
+ 
+
+pinMode (MEMS,INPUT);
+pinMode (SOIL,INPUT);
+pinMode (IR,INPUT);
+pinMode (vib,OUTPUT);
+pinMode(trigg, OUTPUT);
+pinMode(echo, INPUT);
+pinMode (buzzer,OUTPUT);
+
+pinMode (v0,OUTPUT);
+pinMode (v1,OUTPUT);
+pinMode (v2,OUTPUT);
+pinMode (v3,OUTPUT);
+  
+
+  // initialize serial for ESP module
+  Serial1.begin(9600);
+  // initialize ESP module
+  WiFi.init(&Serial1);
+
+  // check for the presence of the shield
+  if (WiFi.status() == WL_NO_SHIELD) {
+    Serial.println(F("WiFi shield not present"));
+    // don't continue
+    while (true);
+  }
+
+  // attempt to connect to WiFi network
+  while ( status != WL_CONNECTED) {
+    Serial.print(F("Attempting to connect to WPA SSID: "));
+    Serial.println(ssid);
+    // Connect to WPA/WPA2 network
+    status = WiFi.begin(ssid, pass);
+  }
+
+  // you're connected now, so print out the data
+  Serial.println(F("You're connected to the network"));
+
+  
+    Serial.println(F("sending data ---1 "));
+    Serial.println(F("Starting connection to server..."));
+    // if you get a connection, report back via serial
+    if (client.connect(server, 80)) {
+      Serial.println(F("Connected to server"));
+      // Make a HTTP request
+      client.println("GET /IoTProjects/MovableRailway/pfupload.php?a=U HTTP/1.1");
+      client.println("Host: projectsiot.xyz");
+      client.println("Connection: close");
+      client.println();
+    }
+    client.flush();
+     client.stop();
+
+
+Serial.println(F("PLEASE SHOW CARD "));
+}
+//----------LOOP------------
+void loop()
+{
+ i=analogRead(IR);
+  s=analogRead(SOIL);
+  m=analogRead(MEMS);
+Serial.print("IR = "); Serial.println(i);
+Serial.print("SOIL = "); Serial.println(s);
+Serial.print("MEMS = "); Serial.println(m);
+digitalWrite(trigg, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigg, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigg, LOW);
+  duration = pulseIn(echo, HIGH);
+ // Serial.print("duration="); Serial.println(duration);
+  distance= duration*0.034/2;
+   
+  Serial.print("Distance = ");  Serial.print(distance);
+  Serial.println(" cm");
+delay(500);
+Serial.println(F("-----------------------------")); 
+ if(i>300)
+{
+  Serial.println("MAN HOLE DETECTED");
+  
+  digitalWrite(v0,LOW);
+  digitalWrite(v1,HIGH);
+  digitalWrite(v2,HIGH);
+  digitalWrite(v3,HIGH);
+  delay(200);
+  digitalWrite(v0,HIGH);
+  digitalWrite(v1,HIGH);
+  digitalWrite(v2,HIGH);
+  digitalWrite(v3,HIGH);
+  beep (); 
+  P='Y';
+  delay(500);
+}
+else if(s>300)
+{
+  Serial.println("WATER DETECTED");
+  
+  digitalWrite(v0,HIGH);
+  digitalWrite(v1,LOW);
+  digitalWrite(v2,HIGH);
+  digitalWrite(v3,HIGH);
+  delay(200);
+  digitalWrite(v0,HIGH);
+  digitalWrite(v1,HIGH);
+  digitalWrite(v2,HIGH);
+  digitalWrite(v3,HIGH);
+  beep (); 
+  Q='Y';
+  delay(500);
+}
+ else if((m<420)||(m>500))
+{
+  Serial.println("PERSON FALL DOWN ");
+  
+  digitalWrite(v0,HIGH);
+  digitalWrite(v1,HIGH);
+  digitalWrite(v2,LOW);
+  digitalWrite(v3,HIGH);
+  delay(200);
+  digitalWrite(v0,HIGH);
+  digitalWrite(v1,HIGH);
+  digitalWrite(v2,HIGH);
+  digitalWrite(v3,HIGH);
+  beep (); 
+  R='Y';
+  delay(500);
+}
+else if(distance<20)
+{
+  Serial.println("OBJECT DETECTED");
+  
+  digitalWrite(v0,HIGH);
+  digitalWrite(v1,HIGH);
+  digitalWrite(v2,HIGH);
+  digitalWrite(v3,LOW);
+  delay(200);
+  digitalWrite(v0,HIGH);
+  digitalWrite(v1,HIGH);
+  digitalWrite(v2,HIGH);
+  digitalWrite(v3,HIGH);
+  beep ();
+  S='Y';
+  delay(500);
+}
+else
+{
+  Serial.println("system ok ");
+  
+  P='N';
+  Q='N';
+  R='N';
+  S='N';
+}
+iot = r+P+B+Q+C+R+D+S+Z;
+sndit ();
+
+
+}// loop
+  
+void sndit ()
+{
+
+  Serial.print(F("A = ")); Serial.println(iot);
+
+  // if the server's disconnected, stop the client
+  if (!client.connected()) {
+    Serial.println(F("Disconnecting from server..."));
+    client.stop();
+
+    // do nothing forevermore
+    //while (true);
+  }
+  client.stop();
+  client.flush();
+
+  for (int x = 0; x < 2; x++)
+  {
+    delay(1000);
+    Serial.println(x, DEC);
+  }
+  Serial.println(F("Starting connection to server..."));
+  // if you get a connection, report back via serial
+  if (client.connect(server, 80)) {
+    Serial.println(F("Connected to server"));
+    // Make a HTTP request
+
+    //client.println("GET /IoTProjects/TollBooth/tollbooth.php?a=A&b=5&c=6&d=3 HTTP/1.1");
+
+    client.println(iot);
+
+    client.println("Host: projectsiot.xyz");
+    client.println("Connection: close");
+    client.println();
+    iot = "\0";
+  }
+
+}
